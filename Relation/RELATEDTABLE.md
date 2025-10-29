@@ -4,11 +4,22 @@
 RELATEDTABLE(<tableName>)
 ```
 如果两个表有 relationship，`RELATEDTABLE` 会根据（多）表里的 Relationship Key 关系键进行查找，  
-并在（⼀）表中返回与当前行相关的（多）表记录组成的**表**。  
+并在（⼀）表中返回与当前行相关的（多）表记录组成的**表**，不是单个值。  
 
-它的作用方向与 `RELATED()` 相反：  
-- `RELATED()`：从**一侧表**取出单个值到多侧表。  
-- `RELATEDTABLE()`：从**多侧表**取出所有相关行到一侧表。  
+问题是，计算列只能保存单个标量值（scalar value），例如数字、字符串、日期等；  
+而RELATEDTABLE() 返回的是整张表（哪怕是一行，也依然是“表”类型）。  
+
+❌ 如果你在计算列中写
+```
+Sales = RELATEDTABLE(Sales)
+```
+Power BI 会直接报错：“The expression refers to multiple columns. Multiple columns cannot be converted to a scalar value.”  
+要让它能输出单个结果，你必须在外层加一个聚合函数或迭代器函数，
+| 示例公式                                                | 含义       | 返回类型 |
+| --------------------------------------------------- | -------- | ---- |
+| `COUNTROWS(RELATEDTABLE(Sales))`                    | 统计相关行数量  | 数值   |
+| `SUMX(RELATEDTABLE(Sales), Sales[SalesAmount])`     | 求相关销售额总和 | 数值   |
+| `AVERAGEX(RELATEDTABLE(Sales), Sales[SalesAmount])` | 求平均销售额   | 数值   |
 
 ---
 
@@ -45,21 +56,5 @@ Sales Count = COUNTROWS(RELATEDTABLE(Sales))
 |------------|-----------|--------|--------------|
 | A101 | Laptop | 100 | 2 |
 | A102 | Mouse | 100 | 1 |
-
----
-
-### 💡 解释
-- 对于 `Product[A101]`，`RELATEDTABLE(Sales)` 返回 Sales 表中所有 ProductID=A101 的行（共2行）。  
-  → `COUNTROWS()` 计算得到 2。  
-- 对于 `Product[A102]`，只找到 1 行。  
-- 因此，`RELATEDTABLE()` 返回的是一个“相关行的表”，常用于配合聚合函数（如 `COUNTROWS`、`SUMX`、`AVERAGEX` 等）进行计算。  
-
----
-
-### 🧠 小结
-| 函数 | 方向 | 返回类型 | 常见用途 |
-|------|-------|-----------|-----------|
-| `RELATED()` | 一 → 多 | 单个值 | 从维度表取值到事实表 |
-| `RELATEDTABLE()` | 多 → 一 | 表 | 从事实表聚合到维度表 |
 
 
