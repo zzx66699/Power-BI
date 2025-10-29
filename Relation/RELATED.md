@@ -3,7 +3,9 @@
 ```DAX
 RELATED(<columnName>)
 ```
-如果两个表有relationship，RELATED是根据（一）表里的Relationship Key关系键进行查找，并在（多）表里返回（一）表<columnName>的列。 
+如果两个表有relationship，RELATED是根据（一）表里的Relationship Key关系键进行查找，并在（多）表里返回（一）表<columnName>的列。
+
+---
 ### 📊 示例
 表1：Sales  
 | SaleID | ProductID | Quantity | SalesAmount |
