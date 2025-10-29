@@ -43,7 +43,6 @@ CALCULATE(
 | Laptop Sales | 500 |
 
 > 说明：Category = "Laptop" 是简单的列=值的形式，这是DAX内置支持的“筛选定义语法”，所以CALCULATE可以直接识别。  
-> DAX引擎自动识别这一句的语义：“在当前模型中，对 Sales[Category] 这一列添加一个筛选：只保留值等于 "Laptop" 的行。”  
 > 这种语法是结构化筛选（Structured Filter），DAX 会直接翻译成对“Category 列”的一个过滤上下文（Filter Context）。  
 > **它不是在一行一行判断 True/False**，而是修改当前上下文：Category 列的允许值集合 = { "Laptop" }。 
 
@@ -81,4 +80,5 @@ CALCULATE(
 |---------|--------|
 | All Category Sales | 1000 |
 
-> `ALL()` 告诉 DAX 要把 Category 这列上的筛选条件清除掉，对模型中的原始 Sales 表 进行求和， 
+> `ALL()` 告诉 DAX 要把 Category 这列上的筛选条件清除掉，对模型中的原始 Sales 表 进行求和。  
+> 但如果当前上下文有其他过滤条件，比如 Year ，那么 Year 仍然是 2024。
