@@ -3,7 +3,9 @@
 ```DAX
 CALCULATE(<expression>, <filter1>[, <filter2>], ...)
 ```
-- `CALCULATE()` 是 DAX 中最核心的函数，用于**在修改筛选上下文（Filter Context）后重新计算表达式**。  
+- `CALCULATE()` 是 DAX 中最核心的函数，用于**在修改筛选上下文（Filter Context）后重新计算表达式**。
+- `CALCULATE()` 是唯一可以**修改筛选上下文**的函数。   
+- 若无筛选条件，仅使用 `CALCULATE(<expression>)`，结果等同于原表达式。  
 - 它会在执行 `<expression>`（度量或聚合）之前：
   1. **评估现有筛选上下文；**  
   2. **应用或覆盖传入的筛选条件（filters）；**  
@@ -12,7 +14,10 @@ CALCULATE(<expression>, <filter1>[, <filter2>], ...)
 - 常用于：
   - 按特定条件计算聚合（如“仅计算 Laptop 类别销售额”）；  
   - 创建动态百分比、同比环比等度量；  
-  - 与 `ALL()`、`FILTER()`、`VALUES()` 等函数结合控制上下文。
+- 常见组合：
+  - `CALCULATE(SUM(...), ALL(...))` → 忽略筛选；
+  - `CALCULATE(SUM(...), FILTER(...))` → 条件筛选；
+  - `CALCULATE([Measure], VALUES(...))` → 按当前维度重新计算。
 
 ---
 
@@ -81,13 +86,3 @@ CALCULATE(
 
 ---
 
-### 💬 说明
-- `CALCULATE()` 是唯一可以**修改筛选上下文**的函数。  
-- 在计算列中使用时，会自动在 row context 与 filter context 之间切换（Context Transition）。  
-- 若无筛选条件，仅使用 `CALCULATE(<expression>)`，结果等同于原表达式。  
-- 常见组合：
-  - `CALCULATE(SUM(...), ALL(...))` → 忽略筛选；
-  - `CALCULATE(SUM(...), FILTER(...))` → 条件筛选；
-  - `CALCULATE([Measure], VALUES(...))` → 按当前维度重新计算。
-
----
