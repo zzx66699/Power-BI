@@ -3,10 +3,14 @@
 ```DAX
 VALUES(<columnName or table>)
 ```
-`VALUES()` 返回指定列或表中**唯一值的列表**（即去重后的表）。  
-它的作用与 `DISTINCT()` 类似，但在**筛选上下文（Filter Context）**中行为略有不同。  
-
-📌 常用于：在筛选器或 `CALCULATE` 中，重新定义筛选范围  
+- `VALUES()` 返回指定列或表中**唯一值的列表**（即去重后的表）。  
+- 它的作用与 `DISTINCT()` 类似，但会根据**当前筛选上下文**返回不同结果。  
+  - 在整个数据范围内 → 返回所有唯一值。  
+  - 在特定切片（如 Category="Laptop"）下 → 只返回该筛选条件下的唯一值。  
+  - 如果某列在当前上下文中没有任何值，`VALUES()` 会返回空表。   
+  - `VALUES()` 在上下文计算中比 `DISTINCT()` 更灵活，适合与 `CALCULATE`、`FILTER` 等函数搭配使用。
+- 常用于在筛选器或 `CALCULATE` 中，重新定义筛选范围。
+- 会保留blank（空值）作为一行
 
 ---
 
@@ -24,7 +28,7 @@ VALUES(<columnName or table>)
 
 #### 示例 1：返回唯一的 ProductID
 ```DAX
-VALUES(Sales[ProductID])
+ProductID = VALUES(Sales[ProductID])
 ```
 
 结果（表）：
@@ -47,21 +51,25 @@ Customer Count = COUNTROWS(VALUES(Sales[Customer]))
 | Customer Count | 3 |
 
 ---
+#### 示例 3：返回含有blank的唯一值
+表：Sales  
+| Customer  | SalesAmount |
+| --------- | ----------- |
+| John      | 200         |
+| Mary      | 300         |
+| *(blank)* | 150         |
+| John      | 250         |
 
-### 💡 解释
-- `VALUES()` 会根据**当前筛选上下文**返回不同结果。  
-  例如：  
-  - 在整个数据范围内 → 返回所有唯一值。  
-  - 在特定切片（如 Category="Laptop"）下 → 只返回该筛选条件下的唯一值。  
-- 如果某列在当前上下文中没有任何值，`VALUES()` 会返回空表。  
-- 当当前上下文只包含一个唯一值时，`VALUES()` 返回的表中也只有这一行。  
-- `VALUES()` 在上下文计算中比 `DISTINCT()` 更灵活，适合与 `CALCULATE`、`FILTER` 等函数搭配使用。
+```
+Costomer = VALUES(Sales[Customer])
+```
 
----
+结果：
+| Customer  |
+| --------- |
+| John      |
+| Mary      |
+| *(blank)* |
 
-### 🧠 小结
-| 函数 | 返回类型 | 筛选上下文敏感 | 常见用途 |
-|------|------------|------------------|-----------|
-| `DISTINCT()` | 表 | ❌ 否 | 返回唯一值列表，忽略上下文 |
-| `VALUES()` | 表 | ✅ 是 | 返回当前上下文下的唯一值 |
-| `ALL()` | 表 | ✅ 是（但移除筛选） | 移除所有筛选，返回整列唯一值 |
+
+
