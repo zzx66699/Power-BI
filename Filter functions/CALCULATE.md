@@ -74,7 +74,7 @@ CALCULATE(
   Product[ListPrice] > 1000
 )
 ```
-这个之所以能直接用，是因为它对 Product（维度表） 做列筛选，随后通过关系过滤到 Sales。
+> 这个之所以能直接用，是因为它对 Product（维度表） 做列筛选，随后通过关系过滤到 Sales。
 
 ----
 
@@ -140,10 +140,10 @@ RETURN
     "Low"
 )
 ```
-Step 1. 逐行计算（行上下文）  
+> Step 1. 逐行计算（行上下文）  
 当计算到第一行时，行上下文是：Customer = "A", Sale Amount = 1500  
 
-Step 2. 进入 CALCULATE()会做两件事：   
+> Step 2. 进入 CALCULATE()会做两件事：   
 1️⃣ 触发行上下文 → 转换为筛选上下文  
 DAX 会自动生成一个过滤条件：Customer = "A"  
 所以现在 SUM() 能在这个上下文里看到所有 Customer = A 的行。  
@@ -151,7 +151,7 @@ DAX 会自动生成一个过滤条件：Customer = "A"
 计算 SUM(CustomerRevenue[Sale Amount])  
 结果 = 1500 + 1200 = 2700 比较：2700 > 2500 → TRUE  
 
-Step 3. 返回 "High"  
+> Step 3. 返回 "High"  
 
 结果：
 | Customer | Sale Amount | 计算逻辑                                    | Class    |
