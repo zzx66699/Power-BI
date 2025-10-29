@@ -20,7 +20,7 @@ RELATED(<columnName>)
 
 建立关系：  
 ```
-Product[ProductID] (一) —— (多) Sales[ProductID]
+Product[ProductID] (一) ——  Sales[ProductID](多)
 ```
 
 在 Sales 表中新建一列： 
