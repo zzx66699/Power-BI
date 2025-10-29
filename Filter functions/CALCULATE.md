@@ -5,7 +5,10 @@ CALCULATE(<expression>, <filter1>[, <filter2>], ...)
 ```
 - `CALCULATE()` 是 DAX 中最核心的函数，用于在修改筛选上下文后返回一个**标量（数值）**。 
 - 若无筛选条件，仅使用 `CALCULATE(<expression>)`，结果等同于原表达式。
-- `CALCULATE`的筛选条件返回的要么是“列=值” 的简单形式，要么必须是一个**虚拟表**。   
+- `CALCULATE`过滤参数有两类：
+  - 列筛选（column filter）：像切片器一样直接给某一列加筛选（例如 `'Product'[List Price] > 1000、'Date'[Year] = 2024`）。这类筛选不需要逐行遍历；引擎能把它编译成“给整列加一个范围/集合过滤”的索引条件。常见用于**维度表**的列，过滤会沿关系传播到事实表。或者是在事实表中简单的列=值的关系。  
+  - 表筛选（table filter）：需要逐行判断的谓词，必须写成 FILTER(Table, condition) 返回一个“被保留下来的行的表”。比如`Sales[SalesAmount] > 200`，想筛掉事实表里的行，这是行级过滤，要用 `FILTER(Sales, Sales[SalesAmount] > 200`)。
+  - 所以，<mark>维度列 → 可以直接当作 CALCULATE 的布尔过滤参数（列筛选）。事实表行条件 → 用 FILTER(事实表, 条件)（表筛选）。<mark>
 - `CALCULATE`还可以将每个行的值变成筛选条件，从而将行上下文，转变成筛选上下文。这个功能叫做Perform context transition 执行上下文转换。  
 - 常见组合：
   - `CALCULATE(SUM(...), ALL(...))` → 忽略筛选；
@@ -14,7 +17,7 @@ CALCULATE(<expression>, <filter1>[, <filter2>], ...)
 
 ---
 
-### 📊 示例
+### 📊 示例 - 列筛选 vs. 表筛选
 表：Sales  
 | Product | Category | SalesAmount |
 |----------|-----------|--------------|
@@ -63,7 +66,29 @@ CALCULATE(
 > 💡CALCULATE 的简单过滤条件只能是 “列 = 某个常量值”，只要你写了比较运算符（>、<、>=、<=、<>），就必须用 FILTER()。  
 ---
 
-#### 示例 3：计算所有类别的总销售额
+#### 3：在维度表里筛选
+```DAX
+Revenue Expensive Products =
+CALCULATE(
+  SUM(Sales[SalesAmount]),
+  Product[ListPrice] > 1000
+)
+```
+这个之所以能直接用，是因为它对 Product（维度表） 做列筛选，随后通过关系过滤到 Sales。
+
+----
+
+### 📊 示例 - 忽略某个筛选条件 vs. 忽略所有筛选条件
+表：Sales  
+| Product | Category | SalesAmount |
+|----------|-----------|--------------|
+| A | Laptop | 200 |
+| B | Laptop | 300 |
+| C | Mouse | 100 |
+| D | Mouse | 400 |
+
+---
+#### 示例 1：计算所有类别的总销售额
 ```DAX
 All Category Sales =
 CALCULATE(
@@ -92,13 +117,16 @@ CALCULATE(
 > 忽略所有来自 Sales 表的过滤。
 
 ---
-#### 示例 5：触发行上下文 → 转换为筛选上下文
+
+### 📊 示例 - 触发行上下文 → 转换为筛选上下文
 表 CustomerRevenue
 | Customer | Sale Amount |
 | -------- | ----------- |
 | A        | 1500        |
 | A        | 1200        |
 | B        | 800         |
+
+---
 
 #### ✅ 情况一：加了 CALCULATE()
 ```DAX
