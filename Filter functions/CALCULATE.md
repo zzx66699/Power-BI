@@ -66,7 +66,7 @@ CALCULATE(
 > 💡CALCULATE 的简单过滤条件只能是 “列 = 某个常量值”，只要你写了比较运算符（>、<、>=、<=、<>），就必须用 FILTER()。  
 ---
 
-#### 示例 3：计算所有类别的总销售额（忽略筛选）
+#### 示例 3：计算所有类别的总销售额
 ```DAX
 All Category Sales =
 CALCULATE(
@@ -81,4 +81,15 @@ CALCULATE(
 | All Category Sales | 1000 |
 
 > `ALL()` 告诉 DAX 要把 Category 这列上的筛选条件清除掉，对模型中的原始 Sales 表 进行求和。  
-> 但如果当前上下文有其他过滤条件，比如 Year ，那么 Year 仍然是 2024。
+> 但如果当前上下文有其他过滤条件，比如 Year = 2024 ，那么 Year 仍然是 2024。
+
+
+#### 示例 3：计算所有销售额
+```DAX
+All Category Sales =
+CALCULATE(
+    SUM(Sales[SalesAmount]),
+    ALL(Sales)
+)
+```
+> 忽略所有来自 Sales 表的过滤。
