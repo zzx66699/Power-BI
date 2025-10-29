@@ -3,10 +3,13 @@
 ```DAX
 DISTINCT(<columnName or table>)
 ```
-`DISTINCT()` 用于返回指定列或表中**唯一值（不重复项）**的表。  
-换句话说，它会去除重复行，只保留每个唯一值各一条记录。  
+- `DISTINCT()` 用于返回指定列或表中**唯一值（不重复项）**的表。  
+- `DISTINCT()` 返回的是**表类型**结果，而非单个值。  
+- `DISTINCT()` 会自动忽略空值（blank），除非你用 `DISTINCTCOUNT()`，它会计算空值。
+- `DISTINCT()` 不受filter context影响
 
 ---
+ 
 
 ### 📊 示例
 表：Sales  
@@ -45,9 +48,4 @@ Customer Count = COUNTROWS(DISTINCT(Sales[Customer]))
 | Customer Count | 3 |
 
 ---
-
-### 💡 解释
-- `DISTINCT()` 返回的是**表类型**结果，而非单个值。  
-- 如果在度量中使用它，一般要与 `COUNTROWS()`、`SUMX()` 等迭代器函数搭配。  
-- `DISTINCT()` 会自动忽略空值（blank），除非你用 `DISTINCTCOUNT()`，它会计算空值。  
 
