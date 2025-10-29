@@ -4,9 +4,9 @@
 DISTINCT(<columnName or table>)
 ```
 - `DISTINCT()` 用于返回指定列或表中**唯一值（不重复项）**的表。  
-- `DISTINCT()` 返回的是**表类型**结果，而非单个值。  
-- `DISTINCT()` 会自动忽略空值（blank），除非你用 `DISTINCTCOUNT()`，它会计算空值。
-- `DISTINCT()` 不受filter context影响
+- 返回的是**表类型**结果，而非单个值。  
+- 会自动忽略空值（blank），除非你用 `DISTINCTCOUNT()`，它会计算空值。
+- 不受filter context影响
 
 ---
  
