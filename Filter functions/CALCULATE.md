@@ -3,8 +3,7 @@
 ```DAX
 CALCULATE(<expression>, <filter1>[, <filter2>], ...)
 ```
-- `CALCULATE()` 是 DAX 中最核心的函数，用于**在修改筛选上下文（Filter Context）后重新计算表达式**。
-- `CALCULATE()` 是唯一可以**修改筛选上下文**的函数。   
+- `CALCULATE()` 是 DAX 中最核心的函数，用于在修改筛选上下文后返回一个**标量（数值）**。 
 - 若无筛选条件，仅使用 `CALCULATE(<expression>)`，结果等同于原表达式。
 - `CALCULATE`的筛选条件返回的要么是“列=值” 的简单形式，要么必须是一个**虚拟表**。   
 - 常用于：
