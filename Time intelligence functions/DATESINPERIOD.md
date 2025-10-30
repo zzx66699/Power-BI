@@ -22,9 +22,6 @@ DATESINPERIOD(<dates>, <start_date>, <number_of_intervals>, <interval>)
 - 若 `<number_of_intervals>` 为正 → 向未来延伸  
 - 若 `<number_of_intervals>` 为负 → 向过去延伸  
 
-换句话说：
-> 它根据起始日期和时间间隔，动态“向前或向后”生成一个日期范围。
-
 ---
 
 ### 📊 示例
@@ -48,12 +45,8 @@ DATESINPERIOD(<dates>, <start_date>, <number_of_intervals>, <interval>)
 DATESINPERIOD('Date'[Date], DATE(2025,1,05), -3, DAY)
 ```
 
-👉 起始日期为 2025-01-05，  
-👉 向过去 3 天（不含 5 日当天），返回范围：
-
 | Date |
 |------|
-| 2025-01-02 |
 | 2025-01-03 |
 | 2025-01-04 |
 | 2025-01-05 |
@@ -84,7 +77,3 @@ CALCULATE(
 这是一种常见的“滚动 30 天累计”写法。
 
 ---
-
-### ⚙️ 注意事项
-- 返回值是**日期表 (table)**，可用于 `CALCULATE()`、`CALCULATETABLE()` 等函数中。  
-- 包含起始日期，
