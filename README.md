@@ -4,7 +4,9 @@
     - 利用 (Utilize) 现有的上下文： 它们首先读取当前计算环境中已有的日期筛选上下文。
     - 修改 (Modify) 现有上下文： 然后，它们根据函数本身的逻辑（例如，平移一年、累计到年初等），生成一个新的日期表来覆盖或替换原有的日期筛选器。
       
-Aggregation functions（聚合函数）— 用于计算一个列或表中的总计、平均、最大、最小等。 
+- Aggregation functions（聚合函数）— 用于计算一个列或表中的总计、平均、最大、最小等。
+  - 聚合函数用于计算一个标量值 (Scalar Value)，例如计数（count）、求和（sum）、平均值（average）、最小值（minimum）或最大值（maximum），它们根据表达式的定义，作用于列或表中的所有行。
+  - 返回标量值 (Returns a Scalar Value):聚合函数的最终结果是一个单个值（例如，一个数字、一个日期或一个文本）。这是与返回表的函数（如 $\text{FILTER}$ 或 $\text{DATEADD}$）最根本的区别。
 
 Date and time functions（日期与时间函数）— 用于基于日期/时间字段进行计算。 
 
