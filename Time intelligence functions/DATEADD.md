@@ -16,7 +16,7 @@ DATEADD(<dates>, <number_of_intervals>, <interval>)
 
 ### 💡 功能说明
 `DATEADD()` 返回一个**日期表**，  
-> 表示在 `<dates>` 的当前筛选上下文基础上，沿时间轴偏移 `<number_of_intervals>` 个 `<interval>` 单位后得到的日期集合。
+> 表示在 `<dates>` 的当前筛选上下文基础上，沿时间轴偏移 `<number_of_intervals>` 个 `<interval>` 单位后得到的日期集合。  
 > 用于将当前日期上下文向前或向后移动指定的时间间隔（天、月、季度、年），  
 > 常用于同比、环比、前期比较等分析。
 
@@ -72,3 +72,12 @@ CALCULATE(
 - `DATESINPERIOD` = “拉伸”时间范围
 
 ---
+### 🧩 与其它函数对比
+| 函数                     | 是否要求连续日期表 | 说明              |
+| ---------------------- | --------- | --------------- |
+| `DATEADD()`            | ✅ 必须连续    | 用位置偏移计算         |
+| `SAMEPERIODLASTYEAR()` | ✅ 必须连续    |   |
+| `DATESINPERIOD()`      | ❌ 不强制     | 按日期区间过滤，只看存在的日期 |
+| `DATESBETWEEN()`       | ❌ 不强制     | 只返回范围内存在的日期     |
+| `DATESYTD()`           | ✅ 建议连续    | 结果会更精确（否则中断）    |
+
