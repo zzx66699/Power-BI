@@ -60,7 +60,9 @@ Display Revenue :=
 IF(
     HASONEVALUE(Sales[Product]),
     SUM(Sales[Revenue]),
-    SUM(Sales[Revenue]) / COUNTROWS(VALUES(Sales[Product]))  //这里写COUNTROWS(VALUES())是因为VALUES包含空行，而COUNTROWS也计算空行。如果写DISTINCTCOUNT, 就忽略了空行。
+    SUM(Sales[Revenue]) / COUNTROWS(VALUES(Sales[Product]))
+    //这里写COUNTROWS(VALUES())是因为VALUES包含空行，而COUNTROWS也计算空行。
+    //如果写DISTINCTCOUNT, 每个空值只计一次，结果可能就不准确。
 )
 ```
 
