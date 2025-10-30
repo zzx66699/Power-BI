@@ -82,8 +82,9 @@ SUMX(
 - 计算该客户的销售额；
 - 汇总所有客户的销售总额。
 
-> 内层 CALCULATE(SUM(Sales[SalesAmount]))
-> CALCULATE(...) → 改变筛选上下文，让它只针对当前客户。
+> 外层 SUMX：创建了行上下文，意味着它在遍历 每个唯一客户 时，会逐行执行后面的表达式。
+> 但这个“行上下文”并不会自动变成“筛选上下文”。而SUM() 需要的是 筛选上下文。
+> 内层 CALCULATE(SUM(Sales[SalesAmount]))会将当前的 行上下文 自动“转换（propagate）”成 筛选上下文。
 > 当 SUMX 遍历到某个客户（比如 Customer = A）时，DAX 临时创建一个筛选上下文，CustomerKey = "A"，于是只会计算 A 的销售额。
 
 ---
