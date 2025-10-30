@@ -13,15 +13,10 @@ KEEPFILTERS(<filter>)
 ---
 
 ### 💡 功能说明
-在 DAX 中，`CALCULATE()` 默认行为是：
-> **新的筛选条件会覆盖（replace）原有筛选上下文。**
-
-而加上 `KEEPFILTERS()` 后：
-> **新的筛选条件与原有筛选条件求交集（AND）。**
-
-📘 换句话说：
-- 不加 `KEEPFILTERS()` → 新条件替换旧筛选；
-- 加了 `KEEPFILTERS()` → 新旧条件同时生效。
+加上 `KEEPFILTERS()` 后：
+> **新的筛选条件与原有筛选条件求交集（AND）。**  
+> 它是一个罕见的函数。它仅在您需要将 `CALCULATE` 内部的筛选器与外部作用于相同列的筛选器进行 AND逻辑组合时才使用。  
+> 在筛选器作用于不同列时，DAX 默认的相交行为已经满足需求，因此不需要 `KEEPFILTERS`。  
 
 ---
 
@@ -63,30 +58,26 @@ Region = "North America" AND Region = "Europe"
 
 ### 📊 示例 3️⃣ — 实际有用的应用场景
 
-#### ✅ 场景：筛选子集（叠加条件）
+#### ✅ 场景：筛选子集（叠加条件）计算「用户选择的颜色」和「高利润颜色」的交集  
+假设您的 $\text{Products}$ 表中有 $\text{Color}$ 列。  
+用户在切片器中选择了 Color 的 三个值：{'Red', 'Blue', 'Green'\}。  
+高利润颜色集合 是：{'Green', 'Yellow', 'Black'\}。  
+您想在目前的切片器中计算仅包含 '高利润' 颜色 的销售额。
 
-假设当前报表筛选：
-```
-Sales[Country] = "USA"
-```
-你希望在此基础上，只计算“USA 内单价 > 1000”的销售额：
-
-```DAX
-High Price USA Sales :=
-CALCULATE(
-    SUM(Sales[SalesAmount]),
-    KEEPFILTERS(Sales[UnitPrice] > 1000)
+``` DAX
+Sales =
+Calculate(
+    SUM(Sales[Revenue]),
+    KEEPFILTERS(
+        Product[Color] IN {'Green', 'Yellow', 'Black'}
+    )
 )
 ```
 
-👉 逻辑：
-- 保留 “Country = USA”；
-- 再加上 “UnitPrice > 1000”；
-- 结果：只计算美国境内高价销售额。
-
 ---
 
-
+> 强制相交 (KEEPFILTERS)： 计算结果基于两个集合的交集，即 $\text{\{'Green'\}}$ 的销售额。
+> 这在需要限制用户可见数据，但又不能完全忽略用户当前筛选器的场景中非常有用。
 
 ### 📊 示例 5️⃣ — 组合用法（高级）
 
