@@ -65,11 +65,11 @@ CALCULATE(
 ---
 
 ### 📚 同类函数（Time intelligence functions）
-
-| 函数 | 功能 |
-|------|------|
-| `SAMEPERIODLASTYEAR()` | 返回上一年相同日期范围 |
-| `DATEADD()` | 将当前上下文向前/向后移动固定间隔 |
-| `PARALLELPERIOD()` | 返回平移 N 个周期的“平行时间段” |
-| `PREVIOUSMONTH()` | 返回上一个月 |
-| `PREVIOUSYEAR()` | 返回上一年 |
+| 目标函数 (简洁版) | 功能描述 | 对应的等效 PARALLELPERIOD 或 DATEADD 表达式 | 适用场景 |
+| :--- | :--- | :--- | :--- |
+| `NEXTMONTH` | 移动到**下一个完整月份** | `PARALLELPERIOD('Date'[Date], 1, MONTH)` | 比较下一个月份的完整数据。 |
+| `NEXTQUARTER` | 移动到**下一个完整季度** | `PARALLELPERIOD('Date'[Date], 1, QUARTER)` | 比较下一个季度的完整数据。 |
+| `NEXTYEAR` | 移动到**下一个完整年份** | `PARALLELPERIOD('Date'[Date], 1, YEAR)` | 比较下一个完整年份的数据。 |
+| `PREVIOUSMONTH` | 移动到**前一个完整月份** | `PARALLELPERIOD('Date'[Date], -1, MONTH)` | 比较上一个完整的月份。 |
+| `PREVIOUSQUARTER` | 移动到**前一个完整季度** | `PARALLELPERIOD('Date'[Date], -1, QUARTER)` | 比较上一个完整的季度。 |
+| `PREVIOUSYEAR` | 移动到**前一个完整年份** | `PARALLELPERIOD('Date'[Date], -1, YEAR)` | 无论当前筛选上下文如何，获取上一个完整年份的数据。 |
