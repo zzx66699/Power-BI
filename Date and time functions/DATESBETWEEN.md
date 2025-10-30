@@ -17,7 +17,8 @@ DATESBETWEEN(<dates>, <start_date>, <end_date>)
 ### 💡 功能说明
 - `DATESBETWEEN()` 返回一个**日期表**，包含 `<dates>` 列中介于 `<start_date>` 与 `<end_date>` 之间的所有日期（包括起止边界）。  
 - 日期必须存在于 `<dates>` 列中；若日期表中缺天，返回结果也会缺对应日期。
-
+- <start_date> 可以写BLANK()，表示在first date in the date column
+  
 ---
 
 ### 🧠 常见用途
@@ -63,7 +64,7 @@ DATESBETWEEN('Date'[Date], DATE(2025,1,6), DATE(2025,1,10))
 
 ---
 
-#### 📊 示例 3：结合 CALCULATE 使用
+#### 示例 3：结合 CALCULATE 使用
 ```DAX
 Sales Jan 2–4 :=
 CALCULATE(
@@ -74,3 +75,20 @@ CALCULATE(
 👉 返回 2025-01-02 到 2025-01-04 之间的销售总额。
 
 ---
+
+#### 示例 3：计算当前筛选上下文情况下的总顾客
+```DAX
+Customers LTD =
+VAR CustomersLTD =
+    CALCULATE(
+        DISTINCTCOUNT(Sales[CustomerKey]),
+        DATESBETWEEN(
+            'Date'[Date],
+            BLANK(), #first date in the date column
+            MAX('Date'[Date]) #the last date in filter context
+        ),
+        'Sales Order'[Channel] = "Internet"
+    )
+RETURN
+    CustomersLTD
+```
