@@ -81,3 +81,12 @@ CALCULATE(
 | `DATESBETWEEN()`       | ❌ 不强制     | 只返回范围内存在的日期     |
 | `DATESYTD()`           | ✅ 建议连续    | 结果会更精确（否则中断）    |
 
+
+---
+
+| 函数名称 | 含义 | 等价的 `DATEADD()` 写法 |
+|-----------|--------|--------------------------|
+| `NEXTDAY(<dates>)` | 返回当前日期的**下一天** | `DATEADD(<dates>, 1, DAY)` |
+| `PREVIOUSDAY(<dates>)` | 返回当前日期的**前一天** | `DATEADD(<dates>, -1, DAY)` |
+
+
