@@ -34,10 +34,6 @@ CALCULATETABLE(
 | 4      | A103      | 4        | 400         |
 
 
-> 说明：Category = "Laptop" 是简单的列=值的形式，这是DAX内置支持的“筛选定义语法”，所以CALCULATE可以直接识别。  
-> 这种语法是结构化筛选（Structured Filter），DAX 会直接翻译成对“Category 列”的一个过滤上下文（Filter Context）。  
-> **它不是在一行一行判断 True/False**，而是修改当前上下文：Category 列的允许值集合 = { "Laptop" }。 
-
 ---
 #### 示例 2：在 SUMX() 中限定迭代范围
 ```DAX
