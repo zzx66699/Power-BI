@@ -24,7 +24,7 @@ DATEADD(<dates>, <number_of_intervals>, <interval>)
 
 ### 📊 示例 
 
-#### ✅ 合法的连续日期表：
+#### 示例 1️⃣：✅ 合法的连续日期表：
 | Date       |
 | ---------- |
 | 2025-01-01 |
@@ -33,7 +33,7 @@ DATEADD(<dates>, <number_of_intervals>, <interval>)
 | 2025-01-04 |
 | 2025-01-05 |
 
-#### ❌ 非连续（会导致 DATEADD() 报错或返回不完整结果）：
+#### 示例 2️⃣：❌ 非连续（会导致 DATEADD() 报错或返回不完整结果）：
 | Date       |              |
 | ---------- | ------------ |
 | 2025-01-01 |              |
@@ -45,7 +45,7 @@ DATEADD(<dates>, <number_of_intervals>, <interval>)
 > 它是通过匹配日期表中的实际日期实现的。如果日期表中缺了某天或某月，DAX 就无法确定“往前一个月的日期集合”是什么。于是要么报错，要么丢失结果。
 ---
 
-####  与 CALCULATE 结合使用（去年同期销售）
+#### 示例 3️⃣： 与 CALCULATE 结合使用（去年同期销售）
 ```DAX
 Sales Last Year :=
 CALCULATE(
