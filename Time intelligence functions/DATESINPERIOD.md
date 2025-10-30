@@ -64,7 +64,7 @@ DATESINPERIOD('Date'[Date], DATE(2025,1,01), 1, MONTH)
 
 ---
 
-### 📊 示例 3️⃣ — 与 CALCULATE 搭配（滚动区间）
+#### 示例 3️⃣ — 与 CALCULATE 搭配（滚动区间）
 ```DAX
 Sales Last 30 Days :=
 CALCULATE(
