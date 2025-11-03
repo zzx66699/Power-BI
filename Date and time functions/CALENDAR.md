@@ -8,9 +8,6 @@ CALENDAR(<start_date>, <end_date>)
 ### 📖 功能
 返回一个包含从 `<start_date>` 到 `<end_date>` 的所有日期的单列表（列名为 `Date`）。
 
-### 📂 分类
-Date and Time functions
-
 ---
 
 ### 📊 示例
