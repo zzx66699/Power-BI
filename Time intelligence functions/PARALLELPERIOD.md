@@ -73,3 +73,15 @@ CALCULATE(
 | `PREVIOUSMONTH` | 移动到**前一个完整月份** | `PARALLELPERIOD('Date'[Date], -1, MONTH)` | 比较上一个完整的月份。 |
 | `PREVIOUSQUARTER` | 移动到**前一个完整季度** | `PARALLELPERIOD('Date'[Date], -1, QUARTER)` | 比较上一个完整的季度。 |
 | `PREVIOUSYEAR` | 移动到**前一个完整年份** | `PARALLELPERIOD('Date'[Date], -1, YEAR)` | 无论当前筛选上下文如何，获取上一个完整年份的数据。 |
+
+--- 
+### 📊 示例 4️⃣ - PREVIOUSYEAR用法
+<img width="248" height="98" alt="image" src="https://github.com/user-attachments/assets/6d85eda2-facd-4d32-a7b5-8beaa3697dac" />  
+
+```DAX
+Previous Year Sales = CALCULATE([Sales Amount], PREVIOUSYEAR('Date'[Date]))
+```
+You have a report that uses Model1. The report has a single report page that has a page level filter set to May 9, 2024. The
+result of the Previous Year Sales measure is displayed in a card visual.  
+返回的是整个2023年的数据：15+20+25=60
+
